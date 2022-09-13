@@ -64,7 +64,7 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
-            //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
+            // DONE!! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
             alert(personInfo);
@@ -141,6 +141,12 @@ function displayPerson(person) {
     let personInfo = `First Name: ${person.firstName}\n`;
     personInfo += `Last Name: ${person.lastName}\n`;
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
+    personInfo += `Gender: ${person.gender}\n`;
+    personInfo += `Birthdate: ${person.dob}\n`;
+    personInfo += `Height: ${person.height}\n`;
+    personInfo += `Weight: ${person.weight}\n`;
+    personInfo += `Eye Color: ${person.eyeColor}\n`;
+    personInfo += `Occupation: ${person.occupation}\n`;
     alert(personInfo);
 }
 // End of displayPerson()
@@ -184,3 +190,26 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+
+
+//! TODO #2: Declare a findPersonFamily function ////////
+
+
+
+
+
+// Search by Traits
+//! TODO #4: Declare a searchByTraits (multiple traits) function ////
+//! TODO #4a: Provide option to search for single or multiple ///////
+function searchByTraits(people) {
+    let firstName = promptFor("What is the person's first name?", chars);
+    let lastName = promptFor("What is the person's last name?", chars);
+
+    // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
+    let foundPerson = people.filter(function (person) {
+        if (person.firstName === firstName && person.lastName === lastName) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
