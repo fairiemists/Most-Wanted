@@ -220,23 +220,51 @@ function findPersonFamily(person[0], people){
 //! TODO #4: Declare a searchByTraits (multiple traits) function ////
 //! TODO #4a: Provide option to search for single or multiple ///////
 function searchByTraits(people) {
+    let singleMultiple = promptFor(
+        `Would you like to use a single trait or multiple traits to search?\nType 'single' or 'multiple'.`
+    ).toLowerCase();
+    let traitChoice;
+    switch (singleMultiple) {
+        case "single":
+            traitChoice = searchBySingle(people);
+            break;
+        case "multiple":
+            traitChoice = searchByMultiple(people);
+            break;
+    }
+}
+
+function searchBySingle(people) {
+    let searchTrait = prompt()
+}
+
+// Gender, Birthdate, Height, Weight, Eye Color, Occupation
+
+    let searchGender = promptFor(`What is the person's gender?`, chars);
+    let searchDob = promptFor(`What is the person's birthdate? mm/dd/yyyy`, chars); 
+    let searchHeight = promptFor(`What is the person's height in inches?`);  // integer NOT chars
+    let searchWeight = promptFor(`What is the person's weight in pounds?`);  // integer NOT chars
+    let searchEyeColor = promptFor(`What is the person's eye color?`, chars);
+    let searchOccupation = promptFor(`What is the person's occupation?`, chars);
+
 
 // prompt single/multiple traits?
 //      (single) 
 //          ask which trait (by number?)
 //          prompt for trait info (run thru chars, promptFor, toLowerCase?)
-//              list each trait & info type to expect (int vs string)
+//              list each trait & info type to expect (int(NOT chars) vs string(chars))
 //      (multiple)
 //          ask y/n for each trait? then info, then ask if done
-//          if not loop (max 5). separate variable for each iteration
+//          if not loop (max 5). separate variable for each iteration?
 //          filter, return, map?
 
-//          
 
+// ///////////////////////////
+let displayOption = prompt(
+    `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know..`
+    )
 
-    let firstName = promptFor("What is the person's first name?", chars);
-    let lastName = promptFor("What is the person's last name?", chars);
-
+// /////////////////
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
         if (person.firstName === firstName && person.lastName === lastName) {
