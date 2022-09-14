@@ -193,7 +193,25 @@ function chars(input) {
 
 
 //! TODO #2: Declare a findPersonFamily function ////////
+let personFamily = findPersonFamily(person[0], people);
+alert(personFamily);
 
+function findPersonFamily(person[0], people){
+// list = spouse, parent(s), sibling(s)
+// find spouse from info. return first & last name with 'spouse'
+//      if spouse id === person id, add person name to 'list'
+// find parents from id's in info. return first & last name with 'parent'
+//      if parent id [0 & 1] === person id, add person name to 'list'
+// find other people with parent id's return names w/ 'sibling'
+//      if parent id [0 & 1] === parent id, add person name to 'list'
+// alert 'list' with labels
+    let foundFamily = people.map(function(people){
+        if (person.spouse )
+    })
+
+
+    return foundFamily;
+}
 
 
 
@@ -202,6 +220,20 @@ function chars(input) {
 //! TODO #4: Declare a searchByTraits (multiple traits) function ////
 //! TODO #4a: Provide option to search for single or multiple ///////
 function searchByTraits(people) {
+
+// prompt single/multiple traits?
+//      (single) 
+//          ask which trait (by number?)
+//          prompt for trait info (run thru chars, promptFor, toLowerCase?)
+//              list each trait & info type to expect (int vs string)
+//      (multiple)
+//          ask y/n for each trait? then info, then ask if done
+//          if not loop (max 5). separate variable for each iteration
+//          filter, return, map?
+
+//          
+
+
     let firstName = promptFor("What is the person's first name?", chars);
     let lastName = promptFor("What is the person's last name?", chars);
 
