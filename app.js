@@ -196,8 +196,9 @@ function chars(input) {
 let personFamily = findPersonFamily(person[0], people);
 alert(personFamily);
 
-function findPersonFamily(person[0], people){
+function findPersonFamily(person, people){
 // list = spouse, parent(s), sibling(s)
+// MAKE USE OF 'INCLUDES'
 // find spouse from info. return first & last name with 'spouse'
 //      if spouse id === person id, add person name to 'list'
 // find parents from id's in info. return first & last name with 'parent'
@@ -237,6 +238,32 @@ function searchByTraits(people) {
 function searchBySingle(people) {
     let searchTrait = prompt()
 }
+
+// ///////////////////// 
+function searchByUserDefinedProp (array){
+    let userInputProp = prompt(`Enter property: `);
+    let userInputVal = prompt(`Enter Value: `);
+    let foundItems = array.filter(function(el){
+        try {
+            if (el[userInputProp].includes(userInputVal)){ //for strings
+                return true;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        finally{
+            if (el[userInputProp] === parseInt(userInputVal)){ //for integers
+                return true;
+            }
+        }
+    });
+    return foundItems
+}
+
+let itemPrinter = searchByUserDefinedProp(array).map(function(el){ // .map also means "for each item..."
+    return `This sentence can have items represented in it & will apply to each item in the array.`
+})
+
 
 // Gender, Birthdate, Height, Weight, Eye Color, Occupation
 
