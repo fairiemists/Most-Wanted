@@ -31,8 +31,8 @@ function app(people) {
     case "no":
       //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
       //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-      searchResults = searchByTraits(people);
-      displayPeople(searchResults);
+      //   searchResults = searchByTraits(people);
+      //   displayPeople(searchResults);
       break;
     default:
       // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -73,16 +73,16 @@ function mainMenu(person, people) {
     case "family":
       //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
       // HINT: Look for a people-collection stringifier utility function to help
-    //   let personFamily = findPersonFamily(person[0], people);
-    //   alert(personFamily);
-        // let results = findPersonFamily(person[0], people)
-        // displayPeople(results);
-        let results = findSpouse(person[0], people)
-        displayPeople(results);
-        results = findParents(person[0], people)
-        displayPeople(results);
-        results = findSiblings(person[0], people)
-        displayPeople(results);      
+      //   let personFamily = findPersonFamily(person[0], people);
+      //   alert(personFamily);
+      // let results = findPersonFamily(person[0], people)
+      // displayPeople(results);
+      let results = findSpouse(person[0], people);
+      displayPeople(results);
+      results = findParents(person[0], people);
+      displayPeople(results);
+      results = findSiblings(person[0], people);
+      displayPeople(results);
       break;
     case "descendants":
       //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -98,16 +98,20 @@ function mainMenu(person, people) {
       // Stop application execution
       return;
     case "test":
-        // let results = findPersonFamily(person[0], people)
-        // displayPeople(results);
-        // let results = findSpouse(person[0], people)
-        // displayPeople(results);
-        // results = findParents(person[0], people)
-        // displayPeople(results);
-        // results = findSiblings(person[0], people)
-        // displayPeople(results);
-        // let personDescendants = findPersonDescendants(person[0], people);
-        // alert(personDescendants);        
+      // let results = findPersonFamily(person[0], people)
+      // displayPeople(results);
+      // let results = findSpouse(person[0], people)
+      // displayPeople(results);
+      // results = findParents(person[0], people)
+      // displayPeople(results);
+      // results = findSiblings(person[0], people)
+      // displayPeople(results);
+      // let personDescendants = findPersonDescendants(person[0], people);
+      // alert(personDescendants);
+
+      let searchResults = searchBySingle(people);
+      console.log(searchResults);
+    // displayPeople(searchResults);
     default:
       // Prompt user again. Another instance of recursion
       return mainMenu(person, people);
@@ -211,9 +215,6 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
-//! TODO #2: Declare a findPersonFamily function ////////
-// let personFamily = findPersonFamily(person[0], people);
-// alert(personFamily);
 
 function findPersonFamily(person, people) {
   // list = spouse, parent(s), sibling(s)
@@ -230,50 +231,54 @@ function findPersonFamily(person, people) {
   //     })
   //     return foundFamily;
 
-    let foundSpouse = findSpouse(person, people);
-    let foundParents = findParents(person, people);
-    let foundSiblings = findSiblings(person, people);
-    let foundFamily = foundSpouse.concat(foundParents, foundSiblings)
-   
-    return foundFamily
+  let foundSpouse = findSpouse(person, people);
+  let foundParents = findParents(person, people);
+  let foundSiblings = findSiblings(person, people);
+  let foundFamily = foundSpouse.concat(foundParents, foundSiblings);
+
+  return foundFamily;
 }
 
 function findSpouse(person, people) {
-return people.filter(function (el) {
+  return people.filter(function (el) {
     return person.currentSpouse === el.id;
-});
+  });
 }
 
 function findParents(person, people) {
-return people.filter(function (el) {
+  return people.filter(function (el) {
     return person.parents.includes(el.id);
-});
+  });
 }
 
 function findSiblings(person, people) {
-    return people.filter(function(el){
-        return person.parents.includes(el.parents[0]) || person.parents.includes(el.parents[1])
-    });
+  return people.filter(function (el) {
+    return (
+      person.parents.includes(el.parents[0]) ||
+      person.parents.includes(el.parents[1])
+    );
+  });
 }
 
+function findPersonDescendants(person, people=[]) {
+    let decendents = people.filter(function(el){
+        if (person.id === el.parents[0] || person.id === el.parents[1]){
+            return true;
+        }
+    })
 
-// function findPersonDescendants(person[0], people) {
-//     let decendents = people.filter(function(el){
-//         if (person.id === el.parents[0] || person.id === el.parents[1]){
-//             return 
-//         }
-//     })
-    
-// }
+    //if there are no decendents return person inside array (terminating condition)
+    //else for every decendent in the collection concatonate decendents with whatever comes back from recursion
 
-
+    return decendents
+}
 
 // Search by Traits
 //! TODO #4: Declare a searchByTraits (multiple traits) function ////
 //! TODO #4a: Provide option to search for single or multiple ///////
 function searchByTraits(people) {
-  let singleMultiple = prompt(
-    `Would you like to use a single trait or multiple traits to search?\nType 'single' or 'multiple'.`
+  let singleMultiple = promptFor(
+    `Would you like to use a single trait or multiple traits to search?\nType 'single' or 'multiple'.`, chars
   ).toLowerCase();
   let traitChoice;
   switch (singleMultiple) {
@@ -284,15 +289,15 @@ function searchByTraits(people) {
       traitChoice = searchByMultiple(people);
       break;
   }
-  return traitChoice
+  return traitChoice;
 }
 
-function searchBySingle(people) {
-  let searchTrait = prompt(`Enter trait you'd like to search by.`);
-  let traitValue = prompt(`Enter the value of that trait.`);
+function searchBySingle(people=[]) {
+  let searchTrait = promptFor(`Enter trait you'd like to search by.`, chars);
+  let traitValue = promptFor(`Enter the value of that trait.`, chars);
   let foundItems = people.filter(function (el) {
     try {
-      if (el[searchTrait].includes(traitValue)) {
+      if (el[searchTrait] === traitValue) {
         //for strings
         return true;
       }
@@ -305,12 +310,19 @@ function searchBySingle(people) {
       }
     }
   });
-  return foundItems;
+  // if length of found items = 1 return found items
+  if (foundItems.length === 1) return foundItems;
+  // elif length of found items = 0 (not enough items in box) return searchBySingle(last round of people)
+  else if (foundItems.length === 0) {
+    alert = `No people found with ${searchTrait} of ${traitValue}.`;
+    return searchBySingle(people);
+  }
+  alert(`We've found some people so far.`)
+  displayPeople(people);
+  return searchBySingle(foundItems);
 }
 
-function searchByMultiple(people) {
-    
-}
+function searchByMultiple(people) {}
 
 // /////////////////////
 function searchByUserDefinedProp(array) {
@@ -342,25 +354,25 @@ function seeAbove() {
 }
 
 function recursiveExample(obj, array = []) {
-    let subArray = obj.subsidiaries;
-    array = [obj];
-    if (subArray.length === 0) {
-        return array;
-    }
-    for (let i = 0; i < subArray.length; i++) {
-        array = array.concat(
-            recursiveExample(subArray[i])
-        );
-    }
+  let subArray = obj.subsidiaries;
+  array = [obj];
+  if (subArray.length === 0) {
     return array;
+  }
+  for (let i = 0; i < subArray.length; i++) {
+    array = array.concat(recursiveExample(subArray[i]));
+  }
+  return array;
 }
-
 
 function info() {
   // Gender, Birthdate, Height, Weight, Eye Color, Occupation
 
   let searchGender = promptFor(`What is the person's gender?`, chars);
-  let searchDob = promptFor(`What is the person's birthdate? mm/dd/yyyy`,chars);
+  let searchDob = promptFor(
+    `What is the person's birthdate? mm/dd/yyyy`,
+    chars
+  );
   let searchHeight = promptFor(`What is the person's height in inches?`); // integer NOT chars
   let searchWeight = promptFor(`What is the person's weight in pounds?`); // integer NOT chars
   let searchEyeColor = promptFor(`What is the person's eye color?`, chars);
