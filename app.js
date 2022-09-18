@@ -87,8 +87,8 @@ function mainMenu(person, people) {
     case "descendants":
       //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
       // HINT: Review recursion lecture + demo for bonus user story
-      let personDescendants = findPersonDescendants(person[0], people);
-      alert(personDescendants);
+      // let personDescendants = findPersonDescendants(person[0], people);
+      // alert(personDescendants);
       break;
     case "restart":
       // Restart app() from the very beginning
@@ -106,11 +106,11 @@ function mainMenu(person, people) {
       // displayPeople(results);
       // results = findSiblings(person[0], people)
       // displayPeople(results);
-      // let personDescendants = findPersonDescendants(person[0], people);
-      // alert(personDescendants);
+      let personDescendants = findPersonDescendants(person[0], people);
+      alert(personDescendants);
 
-      let searchResults = searchBySingle(people);
-      console.log(searchResults);
+      // let searchResults = searchBySingle(people);
+      // console.log(searchResults);
     // displayPeople(searchResults);
     default:
       // Prompt user again. Another instance of recursion
@@ -254,23 +254,34 @@ function findParents(person, people) {
 function findSiblings(person, people) {
   return people.filter(function (el) {
     return (
+      // person.id !== person.id &&
       person.parents.includes(el.parents[0]) ||
-      person.parents.includes(el.parents[1])
+      person.parents.includes(el.parents[1]) 
     );
   });
 }
 
 function findPersonDescendants(person, people=[]) {
-    let decendents = people.filter(function(el){
-        if (person.id === el.parents[0] || person.id === el.parents[1]){
-            return true;
-        }
-    })
+  let decendents = people.filter(function(el){
+
+    if (person.id === el.parents[0] || person.id === el.parents[1]){
+      return;
+    }
+
+    if (decendents.length === 0) {
+      return;
+    }
+
+    for (let i=0; i<decendents.length; i++){
+      decendents = decendents.concat(findPersonDescendants(decendents[i]));
+    }
+
+      return decendents
+  })
 
     //if there are no decendents return person inside array (terminating condition)
     //else for every decendent in the collection concatonate decendents with whatever comes back from recursion
-
-    return decendents
+  return decendents
 }
 
 // Search by Traits
