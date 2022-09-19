@@ -31,8 +31,8 @@ function app(people) {
     case "no":
       //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
       //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-      //   searchResults = searchByTraits(people);
-      //   displayPeople(searchResults);
+      let searchResults = searchByTraits(people);
+      displayPeople(searchResults);
       break;
     default:
       // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -73,8 +73,7 @@ function mainMenu(person, people) {
     case "family":
       //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
       // HINT: Look for a people-collection stringifier utility function to help
-      //   let personFamily = findPersonFamily(person[0], people);
-      //   alert(personFamily);
+
       // let results = findPersonFamily(person[0], people)
       // displayPeople(results);
       let results = findSpouse(person[0], people);
@@ -89,7 +88,6 @@ function mainMenu(person, people) {
       // HINT: Review recursion lecture + demo for bonus user story
       let personDescendants = findPersonDescendants(person[0], people);
       displayPeople(personDescendants);
-      // alert(personDescendants);
       break;
     case "restart":
       // Restart app() from the very beginning
@@ -99,21 +97,10 @@ function mainMenu(person, people) {
       // Stop application execution
       return;
     case "test":
-      // let results = findPersonFamily(person[0], people)
-      // displayPeople(results);
-      // let results = findSpouse(person[0], people)
-      // displayPeople(results);
-      // results = findParents(person[0], people)
-      // displayPeople(results);
-      // results = findSiblings(person[0], people)
-      // displayPeople(results);
-      // let personDescendants = findPersonDescendants(person[0], people);
-      // displayPeople(personDescendants);
-      // alert(personDescendants);
 
-      // let searchResults = searchBySingle(people);
-      // console.log(searchResults);
-    // displayPeople(searchResults);
+      let searchResults = searchByTraits(people);
+      displayPeople(searchResults);
+
     default:
       // Prompt user again. Another instance of recursion
       return mainMenu(person, people);
@@ -265,18 +252,13 @@ function findSiblings(person, people) {
 
 function findPersonDescendants(person, people=[]) {
   let decendants = people.filter(function(el){
-
     if (person.id === el.parents[0] || person.id === el.parents[1]){
       return true;
     }
-
   })
-
   if (decendants.length === 0) {
-    // alert(`This person has no decendants listed.`)
     return decendants;
   }
-
   for (let i=0; i<decendants.length; i++){
     decendants = decendants.concat(findPersonDescendants(decendants[i], people));
   }
@@ -285,26 +267,7 @@ function findPersonDescendants(person, people=[]) {
   return decendants
 }
 
-// Search by Traits
-//! TODO #4: Declare a searchByTraits (multiple traits) function ////
-//! TODO #4a: Provide option to search for single or multiple ///////
-function searchByTraits(people) {
-  let singleMultiple = promptFor(
-    `Would you like to use a single trait or multiple traits to search?\nType 'single' or 'multiple'.`, chars
-  ).toLowerCase();
-  let traitChoice;
-  switch (singleMultiple) {
-    case "single":
-      traitChoice = searchBySingle(people);
-      break;
-    case "multiple":
-      traitChoice = searchByMultiple(people);
-      break;
-  }
-  return traitChoice;
-}
-
-function searchBySingle(people=[]) {
+function searchByTraits(people=[]) {
   let searchTrait = promptFor(`Enter trait you'd like to search by.`, chars);
   let traitValue = promptFor(`Enter the value of that trait.`, chars);
   let foundItems = people.filter(function (el) {
@@ -326,15 +289,45 @@ function searchBySingle(people=[]) {
   if (foundItems.length === 1) return foundItems;
   // elif length of found items = 0 (not enough items in box) return searchBySingle(last round of people)
   else if (foundItems.length === 0) {
-    alert = `No people found with ${searchTrait} of ${traitValue}.`;
-    return searchBySingle(people);
+    alert (`No people found with ${searchTrait} of ${traitValue}.`);
+    return searchByTraits(people);
   }
   alert(`We've found some people so far.`)
-  displayPeople(people);
-  return searchBySingle(foundItems);
+  displayPeople(foundItems);
+  return searchByTraits(foundItems);
 }
 
-function searchByMultiple(person, people) {}
+
+// Search by Traits
+//! TODO #4: Declare a searchByTraits (multiple traits) function ////
+//! TODO #4a: Provide option to search for single or multiple ///////
+function oldSearchByTraits(people) {
+  let singleMultiple = promptFor(
+    `Would you like to use a single trait or multiple traits to search?\nType 'single' or 'multiple'.`, chars
+  ).toLowerCase();
+  let traitChoice;
+  switch (singleMultiple) {
+    case "single":
+      traitChoice = searchBySingle(people);
+      break;
+    case "multiple":
+      traitChoice = searchByMultiple(people);
+      break;
+  }
+  return traitChoice;
+}
+
+function searchByMultiple(person, people) {
+  let searchTrait1 = promptFor(`Enter the first trait you'd like to search by.`, chars);
+  let traitValue1 = promptFor(`Enter the value of that trait.`, chars);  
+  let searchTrait2 = promptFor(`Enter the second trait you'd like to search by.`, chars);
+  let traitValue2 = promptFor(`Enter the value of that trait.`, chars);
+  let searchTrait3 = promptFor(`Enter the third trait you'd like to search by.`, chars);
+  let traitValue3 = promptFor(`Enter the value of that trait.`, chars);  
+  let searchTrait4 = promptFor(`Enter the fourth trait you'd like to search by.`, chars);
+  let traitValue4 = promptFor(`Enter the value of that trait.`, chars);  
+}
+
 
 // /////////////////////
 function searchByUserDefinedProp(array) {
@@ -391,12 +384,3 @@ function info() {
   let searchOccupation = promptFor(`What is the person's occupation?`, chars);
 }
 
-
-// /////////////////
-// The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
-// let foundPerson = people.filter(function (person) {
-//     if (person.firstName === firstName && person.lastName === lastName) {
-//         return true;
-//     }
-// });
-// return foundPerson;
