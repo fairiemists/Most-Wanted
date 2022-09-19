@@ -31,8 +31,8 @@ function app(people) {
     case "no":
       //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
       //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-      let searchResults = searchByTraits(people);
-      displayPeople(searchResults);
+      searchResults = searchByTraits(people);
+      // displayPeople(searchResults);
       break;
     default:
       // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
