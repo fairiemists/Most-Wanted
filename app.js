@@ -98,8 +98,8 @@ function mainMenu(person, people) {
       return;
     case "test":
 
-      let searchResults = searchByTraits(people);
-      displayPeople(searchResults);
+      // let searchResults = searchByTraits(people);
+      // displayPeople(searchResults);
 
     default:
       // Prompt user again. Another instance of recursion
