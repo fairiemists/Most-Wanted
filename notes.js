@@ -63,3 +63,44 @@ log(arrowResult)
         // if length of results is 1, return results
         // if length of results is 0, run function again with people
         // length of results >1, keep running function with results
+
+
+function searchByUserDefinedProp(array) {
+  let userInputProp = prompt(`Enter property: `);
+  let userInputVal = prompt(`Enter Value: `);
+  let foundItems = array.filter(function (el) {
+    try {
+      if (el[userInputProp].includes(userInputVal)) {
+        //for strings
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      if (el[userInputProp] === parseInt(userInputVal)) {
+        //for integers
+        return true;
+      }
+    }
+  });
+  return foundItems;
+}
+
+function seeAbove() {
+  let itemPrinter = searchByUserDefinedProp(array).map(function (el) {
+    // .map also means "for each item..."
+    return `This sentence can have items represented in it & will apply to each item in the array.`;
+  });
+}
+
+function recursiveExample(obj, array = []) {
+  let subArray = obj.subsidiaries;
+  array = [obj];
+  if (subArray.length === 0) {
+    return array;
+  }
+  for (let i = 0; i < subArray.length; i++) {
+    array = array.concat(recursiveExample(subArray[i]));
+  }
+  return array;
+}

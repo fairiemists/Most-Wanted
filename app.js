@@ -32,7 +32,6 @@ function app(people) {
       //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
       //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
       searchResults = searchByTraits(people);
-      // displayPeople(searchResults);
       break;
     default:
       // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -65,7 +64,7 @@ function mainMenu(person, people) {
   // Routes our application based on the user's input
   switch (displayOption) {
     case "info":
-      // DONE!! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
+      // TODO #1: Utilize the displayPerson function //////////////////////////////////////////
       // HINT: Look for a person-object stringifier utility function to help
       let personInfo = displayPerson(person[0]);
       alert(personInfo);
@@ -96,11 +95,6 @@ function mainMenu(person, people) {
     case "quit":
       // Stop application execution
       return;
-    case "test":
-
-      // let searchResults = searchByTraits(people);
-      // displayPeople(searchResults);
-
     default:
       // Prompt user again. Another instance of recursion
       return mainMenu(person, people);
@@ -295,92 +289,5 @@ function searchByTraits(people=[]) {
   alert(`We've found some people so far.`)
   displayPeople(foundItems);
   return searchByTraits(foundItems);
-}
-
-
-// Search by Traits
-//! TODO #4: Declare a searchByTraits (multiple traits) function ////
-//! TODO #4a: Provide option to search for single or multiple ///////
-function oldSearchByTraits(people) {
-  let singleMultiple = promptFor(
-    `Would you like to use a single trait or multiple traits to search?\nType 'single' or 'multiple'.`, chars
-  ).toLowerCase();
-  let traitChoice;
-  switch (singleMultiple) {
-    case "single":
-      traitChoice = searchBySingle(people);
-      break;
-    case "multiple":
-      traitChoice = searchByMultiple(people);
-      break;
-  }
-  return traitChoice;
-}
-
-function searchByMultiple(person, people) {
-  let searchTrait1 = promptFor(`Enter the first trait you'd like to search by.`, chars);
-  let traitValue1 = promptFor(`Enter the value of that trait.`, chars);  
-  let searchTrait2 = promptFor(`Enter the second trait you'd like to search by.`, chars);
-  let traitValue2 = promptFor(`Enter the value of that trait.`, chars);
-  let searchTrait3 = promptFor(`Enter the third trait you'd like to search by.`, chars);
-  let traitValue3 = promptFor(`Enter the value of that trait.`, chars);  
-  let searchTrait4 = promptFor(`Enter the fourth trait you'd like to search by.`, chars);
-  let traitValue4 = promptFor(`Enter the value of that trait.`, chars);  
-}
-
-
-// /////////////////////
-function searchByUserDefinedProp(array) {
-  let userInputProp = prompt(`Enter property: `);
-  let userInputVal = prompt(`Enter Value: `);
-  let foundItems = array.filter(function (el) {
-    try {
-      if (el[userInputProp].includes(userInputVal)) {
-        //for strings
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      if (el[userInputProp] === parseInt(userInputVal)) {
-        //for integers
-        return true;
-      }
-    }
-  });
-  return foundItems;
-}
-
-function seeAbove() {
-  let itemPrinter = searchByUserDefinedProp(array).map(function (el) {
-    // .map also means "for each item..."
-    return `This sentence can have items represented in it & will apply to each item in the array.`;
-  });
-}
-
-function recursiveExample(obj, array = []) {
-  let subArray = obj.subsidiaries;
-  array = [obj];
-  if (subArray.length === 0) {
-    return array;
-  }
-  for (let i = 0; i < subArray.length; i++) {
-    array = array.concat(recursiveExample(subArray[i]));
-  }
-  return array;
-}
-
-function info() {
-  // Gender, Birthdate, Height, Weight, Eye Color, Occupation
-
-  let searchGender = promptFor(`What is the person's gender?`, chars);
-  let searchDob = promptFor(
-    `What is the person's birthdate? mm/dd/yyyy`,
-    chars
-  );
-  let searchHeight = promptFor(`What is the person's height in inches?`); // integer NOT chars
-  let searchWeight = promptFor(`What is the person's weight in pounds?`); // integer NOT chars
-  let searchEyeColor = promptFor(`What is the person's eye color?`, chars);
-  let searchOccupation = promptFor(`What is the person's occupation?`, chars);
 }
 
