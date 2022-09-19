@@ -87,7 +87,8 @@ function mainMenu(person, people) {
     case "descendants":
       //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
       // HINT: Review recursion lecture + demo for bonus user story
-      // let personDescendants = findPersonDescendants(person[0], people);
+      let personDescendants = findPersonDescendants(person[0], people);
+      displayPeople(personDescendants);
       // alert(personDescendants);
       break;
     case "restart":
@@ -106,8 +107,9 @@ function mainMenu(person, people) {
       // displayPeople(results);
       // results = findSiblings(person[0], people)
       // displayPeople(results);
-      let personDescendants = findPersonDescendants(person[0], people);
-      alert(personDescendants);
+      // let personDescendants = findPersonDescendants(person[0], people);
+      // displayPeople(personDescendants);
+      // alert(personDescendants);
 
       // let searchResults = searchBySingle(people);
       // console.log(searchResults);
@@ -262,26 +264,25 @@ function findSiblings(person, people) {
 }
 
 function findPersonDescendants(person, people=[]) {
-  let decendents = people.filter(function(el){
+  let decendants = people.filter(function(el){
 
     if (person.id === el.parents[0] || person.id === el.parents[1]){
-      return;
+      return true;
     }
 
-    if (decendents.length === 0) {
-      return;
-    }
-
-    for (let i=0; i<decendents.length; i++){
-      decendents = decendents.concat(findPersonDescendants(decendents[i]));
-    }
-
-      return decendents
   })
 
+  if (decendants.length === 0) {
+    // alert(`This person has no decendants listed.`)
+    return decendants;
+  }
+
+  for (let i=0; i<decendants.length; i++){
+    decendants = decendants.concat(findPersonDescendants(decendants[i], people));
+  }
     //if there are no decendents return person inside array (terminating condition)
     //else for every decendent in the collection concatonate decendents with whatever comes back from recursion
-  return decendents
+  return decendants
 }
 
 // Search by Traits
@@ -333,7 +334,7 @@ function searchBySingle(people=[]) {
   return searchBySingle(foundItems);
 }
 
-function searchByMultiple(people) {}
+function searchByMultiple(person, people) {}
 
 // /////////////////////
 function searchByUserDefinedProp(array) {
@@ -390,22 +391,7 @@ function info() {
   let searchOccupation = promptFor(`What is the person's occupation?`, chars);
 }
 
-// prompt single/multiple traits?
-//      (single)
-//          ask which trait (by number?)
-//          prompt for trait info (run thru chars, promptFor, toLowerCase?)
-//              list each trait & info type to expect (int(NOT chars) vs string(chars))
-//      (multiple)
-//          ask y/n for each trait? then info, then ask if done
-//          if not loop (max 5). separate variable for each iteration?
-//          filter, return, map?
 
-// ///////////////////////////
-function display() {
-  let displayOption = prompt(
-    `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know..`
-  );
-}
 // /////////////////
 // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
 // let foundPerson = people.filter(function (person) {
